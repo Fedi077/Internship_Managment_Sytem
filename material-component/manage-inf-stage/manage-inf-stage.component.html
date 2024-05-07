@@ -1,0 +1,112 @@
+<mat-card>
+    <b><span>Registration</span></b>
+    <button mat-flat-button color="primary" class="float-right" [disabled]="validateSubmit()" (click)="submitAction()">Submit & Form</button>
+</mat-card>
+<hr>
+<mat-card>
+    <b><span>User Details:</span></b>
+    <form [formGroup]="manageInfoStageForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Student's name</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="manageInfoStageForm.controls.name.touched && manageInfoStageForm.controls.name.invalid">
+                        <span *ngIf="manageInfoStageForm.controls.name.errors.required">This field is mandatory.</span>
+                        <span *ngIf="manageInfoStageForm.controls.name.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Student's email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="manageInfoStageForm.controls.email.touched && manageInfoStageForm.controls.email.invalid">
+                        <span *ngIf="manageInfoStageForm.controls.email.errors.required">This field is mandatory.</span>
+                        <span *ngIf="manageInfoStageForm.controls.email.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Supervisor's name</mat-label>
+                    <input matInput formControlName="supervisorName" required>
+                    <mat-error *ngIf="manageInfoStageForm.controls.supervisorName.touched && manageInfoStageForm.controls.supervisorName.invalid">
+                        <span *ngIf="manageInfoStageForm.controls.supervisorName.errors.required">This field is mandatory.</span>
+                        <span *ngIf="manageInfoStageForm.controls.supervisorName.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Level of study</mat-label>
+                    <mat-select matInput formControlName="levelStudy" required>
+                        <mat-option value="License">License</mat-option>
+                        <mat-option value="Master">Master</mat-option>
+                        <mat-option value="Cycle ingenieur">Cycle ingenieur</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="manageInfoStageForm.controls.levelStudy.touched && manageInfoStageForm.controls.levelStudy.invalid">
+                        <span *ngIf="manageInfoStageForm.controls.levelStudy.errors.required">This field is mandatory.</span>
+                        <span *ngIf="manageInfoStageForm.controls.levelStudy.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>  
+        </div>
+    </form>
+</mat-card>
+<hr>
+<mat-card>
+    <b><span>Select Stage:</span></b>
+    <form [formGroup]="manageInfoStageForm">
+        <div fxFlex fxLayout="column">
+            <div fxLayout="row wrap">
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="category" (selectionChange)="getStagesByCategory($event.value)">
+                        <mat-option *ngFor="let category of categorys" [value]="category">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>Stage</mat-label>
+                    <mat-select formControlName="stage" (selectionChange)="getStageDetails($event.value)">
+                        <mat-option *ngFor="let stage of stages" [value]="stage">
+                            {{stage.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>  
+        </div>
+    </form>
+    <div >
+        <button mat-flat-button color="primary" [disabled]="validateStageAdd()" (click)="add()" >Add</button>
+    </div>
+</mat-card>
+<hr>
+<div class="responsive_table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+                {{element.name}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>Category</th>
+            <td mat-cell *matCellDef="let element">
+                {{element.category}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element;let i = index" class="action-link">
+                <button mat-icon-button color="warn" matTooltip="Delete" (click)="handleDeleteAction(i,element)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

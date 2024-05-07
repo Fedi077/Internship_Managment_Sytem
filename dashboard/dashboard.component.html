@@ -1,0 +1,36 @@
+<body>
+    <mat-card>
+        <b><span>Dashboard</span></b>
+    </mat-card>
+    <br/>
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Categories</h2>
+                    <h1 class="title">{{data?.category}}</h1>
+                    <p><button class ="button" [routerLink]="['/category']">View</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Internships</h2>
+                    <h1 class="title">{{data?.stage}}</h1>
+                    <p><button class ="button" [routerLink]="['/stage']">View</button></p>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <div class="container">
+                    <h2 class="title">Affected Internships</h2>
+                    <h1 class="title">{{data?.stageEffectuez}}</h1>
+                    <p><button class ="button" [routerLink]="['/Affectedinternships']">View</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</body>
